@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:tools="http://schemas.android.com/tools"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingLeft="@dimen/activity_horizontal_margin"
+                android:paddingRight="@dimen/activity_horizontal_margin"
+                android:paddingTop="@dimen/activity_vertical_margin"
+                android:paddingBottom="@dimen/activity_vertical_margin"
+                tools:context="co.kaush.android.sample.DemoActivity$PlaceholderFragment">
+
+    <EditText
+        android:id="@+id/normal_edit_text"
+        android:hint="This is a normal EditText"
+        android:textColorHint="@android:color/background_dark"
+        android:layout_alignParentTop="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+    <co.kaush.android.floatlabel.FloatLabelEditText
+        android:id="@+id/float_label_text_1"
+        android:layout_below="@+id/normal_edit_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:hint="Floating Label 1"
+        app:textSize="10sp"
+        app:textColorHintFocused="@android:color/background_dark"
+        app:textColorHintUnFocused="@android:color/darker_gray"/>
+
+    <co.kaush.android.floatlabel.FloatLabelEditText
+        android:id="@+id/float_label_text_2"
+        android:layout_below="@+id/float_label_text_1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        app:hint="Floating Label 2"
+        app:text="Text"
+        app:textSize="10sp"
+        app:textColorHintFocused="@android:color/background_dark"
+        app:textColorHintUnFocused="@android:color/darker_gray"/>
+
+</RelativeLayout>

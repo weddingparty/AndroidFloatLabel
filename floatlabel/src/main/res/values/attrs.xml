@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FloatLabelEditText">
+        <attr name="hint" format="string" />
+        <attr name="text" format="string"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColorHintFocused" format="color"/>
+        <attr name="textColorHintUnFocused" format="color"/>
+    </declare-styleable>
+</resources>

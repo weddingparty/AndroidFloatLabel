@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_marginTop="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+    <TextView
+        android:id="@+id/floating_label_hint"
+        android:layout_width="wrap_content"
+        android:visibility="invisible"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="-8dp"
+        android:layout_alignParentTop="true" />
+
+    <EditText
+        android:id="@+id/floating_label_edit_text"
+        android:layout_width="wrap_content"
+        android:hint="tmp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/floating_label_hint"/>
+
+</RelativeLayout>
