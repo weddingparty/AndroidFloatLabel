@@ -18,8 +18,7 @@ import android.widget.TextView;
 @TargetApi(11)
 public class FloatLabelEditText extends RelativeLayout {
 
-    private int mFocusedColor, mUnFocusedColor,
-            mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
+    private int mFocusedColor, mUnFocusedColor, mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
     private float mTextSize;
     private String mHintText, mEditText;
 
@@ -125,12 +124,10 @@ public class FloatLabelEditText extends RelativeLayout {
     private TextWatcher getTextWatcher() {
         return new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -156,9 +153,7 @@ public class FloatLabelEditText extends RelativeLayout {
     private OnFocusChangeListener getFocusChangeListener() {
         return new OnFocusChangeListener() {
 
-            ValueAnimator mFocusToUnfocusAnimation
-                    ,
-                    mUnfocusToFocusAnimation;
+            ValueAnimator mFocusToUnfocusAnimation,mUnfocusToFocusAnimation;
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
