@@ -31,4 +31,5 @@ proguard/
 # OSX specific files
 .DS_Store
 
-
+# Gradle
+.gradle

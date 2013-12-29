@@ -143,12 +143,12 @@ public class FloatLabelEditText extends RelativeLayout {
 
     private void showFloatingLabel() {
         mFloatingLabel.setVisibility(VISIBLE);
-        mFloatingLabel.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_in_from_bottom_with_fade));
+        mFloatingLabel.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_from_bottom));
     }
 
     private void hideFloatingLabel() {
         mFloatingLabel.setVisibility(INVISIBLE);
-        mFloatingLabel.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_out_to_bottom_with_fade));
+        mFloatingLabel.startAnimation(AnimationUtils.loadAnimation(getContext(), R.anim.slide_to_bottom));
     }
 
     private OnFocusChangeListener getFocusChangeListener() {
