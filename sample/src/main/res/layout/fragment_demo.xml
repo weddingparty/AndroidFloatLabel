@@ -24,8 +24,8 @@
         android:layout_height="wrap_content"
 
         app:hint="Floating Label 1"
-        app:textSize="10sp"
-        app:textColorHintFocused="@android:color/background_dark"
+        app:textSize="9sp"
+        app:textColorHintFocused="@color/holo_blue_dark"
         app:textColorHintUnFocused="@android:color/darker_gray"/>
 
     <co.kaush.android.floatlabel.FloatLabelEditText
@@ -36,8 +36,8 @@
 
         app:hint="Floating Label 2"
         app:text="Text"
-        app:textSize="10sp"
-        app:textColorHintFocused="@android:color/background_dark"
+        app:textSize="9sp"
+        app:textColorHintFocused="@color/holo_blue_dark"
         app:textColorHintUnFocused="@android:color/darker_gray"/>
 
 </RelativeLayout>
