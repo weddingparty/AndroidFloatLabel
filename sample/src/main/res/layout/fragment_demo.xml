@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
 
         app:hint="Floating Label 1"
-        app:textSize="9sp"
         app:textColorHintFocused="@color/holo_blue_dark"
         app:textColorHintUnFocused="@android:color/darker_gray"/>
 
@@ -36,7 +35,7 @@
 
         app:hint="Floating Label 2"
         app:text="Text"
-        app:textSize="9sp"
+        app:textSize="16sp"
         app:textColorHintFocused="@color/holo_blue_dark"
         app:textColorHintUnFocused="@android:color/darker_gray"/>
 
