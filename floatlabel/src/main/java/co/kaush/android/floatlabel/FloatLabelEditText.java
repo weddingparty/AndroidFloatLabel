@@ -20,7 +20,7 @@ import android.widget.TextView;
 public class FloatLabelEditText extends RelativeLayout {
 
     private int mFocusedColor, mUnFocusedColor, mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
-    private float mTextSize;
+    private float mTextSizeInSp;
     private String mHintText, mEditText;
 
     private AttributeSet mAttrs;
@@ -91,34 +91,33 @@ public class FloatLabelEditText extends RelativeLayout {
 
         mHintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
         mEditText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
-        mTextSize = attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize, (int) mEditTextView.getTextSize());
+        mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize, (int) mEditTextView.getTextSize()));
         mFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused, android.R.color.black);
         mUnFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused, android.R.color.darker_gray);
 
         attributesFromXmlLayout.recycle();
     }
 
+    private void setupEditTextView() {
+        mEditTextView.setHint(mHintText);
+        mEditTextView.setHintTextColor(mUnFocusedColor);
+        mEditTextView.setText(mEditText);
+        mEditTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mTextSizeInSp);
+        mEditTextView.addTextChangedListener(getTextWatcher());
+        if (mCurrentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+            mEditTextView.setOnFocusChangeListener(getFocusChangeListener());
+        }
+    }
+
     private void setupFloatingLabel() {
         mFloatingLabel.setText(mHintText);
         mFloatingLabel.setTextColor(mUnFocusedColor);
-        mFloatingLabel.setTextSize(TypedValue.COMPLEX_UNIT_PX, (float) (mTextSize / 1.3));
+        mFloatingLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) (mTextSizeInSp / 1.3));
 
         mFloatingLabel.setPadding(mEditTextView.getPaddingLeft(), 0, 0, 0);
 
         if (getText().length() > 0) {
             showFloatingLabel();
-        }
-    }
-
-    private void setupEditTextView() {
-        mEditTextView.setHint(mHintText);
-        mEditTextView.setHintTextColor(mUnFocusedColor);
-        mEditTextView.setText(mEditText);
-        mEditTextView.setTextSize(TypedValue.COMPLEX_UNIT_PX, mTextSize);
-
-        mEditTextView.addTextChangedListener(getTextWatcher());
-        if (mCurrentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            mEditTextView.setOnFocusChangeListener(getFocusChangeListener());
         }
     }
 
@@ -199,5 +198,10 @@ public class FloatLabelEditText extends RelativeLayout {
 
     private Editable getEditTextString() {
         return mEditTextView.getText();
+    }
+
+    private float getScaledFontSize(float fontSizeFromAttributes) {
+        float scaledDensity = getContext().getResources().getDisplayMetrics().scaledDensity;
+        return fontSizeFromAttributes/scaledDensity;
     }
 }
