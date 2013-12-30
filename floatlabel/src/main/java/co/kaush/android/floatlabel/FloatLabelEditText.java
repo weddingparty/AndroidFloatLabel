@@ -91,7 +91,7 @@ public class FloatLabelEditText extends RelativeLayout {
 
         mHintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
         mEditText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
-        mTextSize = attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize, 36);
+        mTextSize = attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize, (int) mEditTextView.getTextSize());
         mFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused, android.R.color.black);
         mUnFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused, android.R.color.darker_gray);
 
