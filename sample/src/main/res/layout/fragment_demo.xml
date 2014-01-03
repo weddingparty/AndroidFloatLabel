@@ -12,7 +12,6 @@
     <EditText
         android:id="@+id/normal_edit_text"
         android:hint="This is a normal EditText"
-        android:textColorHint="@android:color/background_dark"
         android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
