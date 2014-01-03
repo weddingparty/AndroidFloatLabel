@@ -1,5 +1,9 @@
 # Floating Label Edit Text for Android
 
+![Float label for Android](http://nerds.weddingpartyapp.com/images/posts/float-label-android-cropped.gif)
+
+For more info, see [this blog post](http://nerds.weddingpartyapp.com/tech/2013/12/25/float-label-pattern-for-android/).
+
 # Goals for this project
 
 Having goals for a project, keep a quality check and help with learning. Since I intended this to be a community project, the goals are aligned, keeping that fact in mind. The goals for this project are as follows:
