@@ -3,5 +3,5 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="co.kaush.android.sample.DemoActivity"
+    tools:context="com.micromobs.android.sample.DemoActivity"
     tools:ignore="MergeRootFrame" />

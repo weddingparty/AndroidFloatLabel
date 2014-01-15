@@ -1,4 +1,4 @@
-package co.kaush.android.floatlabel;
+package com.micromobs.android.floatlabel;
 
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
@@ -15,6 +15,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import com.micromobs.android.floatlabel.R;
 
 @TargetApi(11)
 public class FloatLabelEditText extends RelativeLayout {

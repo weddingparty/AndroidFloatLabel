@@ -1,4 +1,4 @@
-package co.kaush.android.sample;
+package com.micromobs.android.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
