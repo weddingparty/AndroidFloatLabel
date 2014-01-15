@@ -153,7 +153,7 @@ public class FloatLabelEditText extends RelativeLayout {
     private OnFocusChangeListener getFocusChangeListener() {
         return new OnFocusChangeListener() {
 
-            ValueAnimator mFocusToUnfocusAnimation,mUnfocusToFocusAnimation;
+            ValueAnimator mFocusToUnfocusAnimation, mUnfocusToFocusAnimation;
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {

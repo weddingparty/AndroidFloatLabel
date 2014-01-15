@@ -1,5 +1,5 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:app="http://schemas.android.com/apk/res-auto"
+                xmlns:floatlabel="http://schemas.android.com/apk/res-auto"
                 xmlns:tools="http://schemas.android.com/tools"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -22,9 +22,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:hint="Floating Label 1"
-        app:textColorHintFocused="@color/holo_blue_dark"
-        app:textColorHintUnFocused="@android:color/darker_gray"/>
+        floatlabel:hint="Floating Label 1"
+        floatlabel:textColorHintFocused="@color/holo_blue_dark"
+        floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
     <co.kaush.android.floatlabel.FloatLabelEditText
         android:id="@+id/float_label_text_2"
@@ -32,10 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        app:hint="Floating Label 2"
-        app:text="Text"
-        app:textSize="16sp"
-        app:textColorHintFocused="@color/holo_blue_dark"
-        app:textColorHintUnFocused="@android:color/darker_gray"/>
+        floatlabel:hint="Floating Label 2"
+        floatlabel:text="Text"
+        floatlabel:textSize="16sp"
+        floatlabel:textColorHintFocused="@color/holo_blue_dark"
+        floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
 </RelativeLayout>
