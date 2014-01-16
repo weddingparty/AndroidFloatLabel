@@ -18,7 +18,7 @@
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
         android:id="@+id/float_label_text_1"
-        android:layout_below="@+id/normal_edit_text"
+        android:layout_below="@id/normal_edit_text"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
@@ -28,7 +28,7 @@
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
         android:id="@+id/float_label_text_2"
-        android:layout_below="@+id/float_label_text_1"
+        android:layout_below="@id/float_label_text_1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
