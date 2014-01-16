@@ -14,11 +14,11 @@ import android.view.View;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.RelativeLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 @TargetApi(11)
-public class FloatLabelEditText extends RelativeLayout {
+public class FloatLabelEditText extends LinearLayout {
 
     private int mFocusedColor, mUnFocusedColor, mFitScreenWidth,
                 mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
@@ -117,18 +117,6 @@ public class FloatLabelEditText extends RelativeLayout {
         }
     }
 
-    private int getSpecialWidth() {
-        float screenWidth = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
-        int   prevWidth   = mEditTextView.getWidth();
-
-        switch (mFitScreenWidth) {
-            case 2:
-                return (int) Math.round(screenWidth * 0.5);
-            default:
-                return Math.round(screenWidth);
-        }
-    }
-
     private void setupFloatingLabel() {
         mFloatingLabel.setText(mHintText);
         mFloatingLabel.setTextColor(mUnFocusedColor);
@@ -224,4 +212,19 @@ public class FloatLabelEditText extends RelativeLayout {
         float scaledDensity = getContext().getResources().getDisplayMetrics().scaledDensity;
         return fontSizeFromAttributes/scaledDensity;
     }
+
+    private int getSpecialWidth() {
+        float screenWidth = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
+        int   prevWidth   = mEditTextView.getWidth();
+
+        switch (mFitScreenWidth) {
+            case 2:
+                return (int) Math.round(screenWidth * 0.5);
+            default:
+                return Math.round(screenWidth);
+        }
+    }
+
+
+
 }
