@@ -38,4 +38,31 @@
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@+id/float_label_text_3"
+        android:layout_below="@id/float_label_text_2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        floatlabel:fitScreenWidth="half"
+        floatlabel:hint="Fit Width (half) Example"
+        floatlabel:text="Small txt"
+        floatlabel:textSize="16sp"
+        floatlabel:textColorHintFocused="@color/holo_blue_dark"
+        floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
+
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@+id/float_label_text_4"
+        android:layout_below="@id/float_label_text_3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        floatlabel:fitScreenWidth="full"
+        floatlabel:hint="Fit Width (full) Example"
+        floatlabel:text="Small txt"
+        floatlabel:textSize="16sp"
+        floatlabel:textColorHintFocused="@color/holo_blue_dark"
+        floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
+
+
 </RelativeLayout>

@@ -11,17 +11,17 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.micromobs.android.floatlabel.R;
-
 @TargetApi(11)
 public class FloatLabelEditText extends RelativeLayout {
 
-    private int mFocusedColor, mUnFocusedColor, mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
+    private int mFocusedColor, mUnFocusedColor, mFitScreenWidth,
+                mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
     private float mTextSizeInSp;
     private String mHintText, mEditText;
 
@@ -96,6 +96,7 @@ public class FloatLabelEditText extends RelativeLayout {
         mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize, (int) mEditTextView.getTextSize()));
         mFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused, android.R.color.black);
         mUnFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused, android.R.color.darker_gray);
+        mFitScreenWidth = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth, 0);
 
         attributesFromXmlLayout.recycle();
     }
@@ -106,8 +107,25 @@ public class FloatLabelEditText extends RelativeLayout {
         mEditTextView.setText(mEditText);
         mEditTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mTextSizeInSp);
         mEditTextView.addTextChangedListener(getTextWatcher());
+
+        if (mFitScreenWidth > 0) {
+            mEditTextView.setWidth(getSpecialWidth());
+        }
+
         if (mCurrentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             mEditTextView.setOnFocusChangeListener(getFocusChangeListener());
+        }
+    }
+
+    private int getSpecialWidth() {
+        float screenWidth = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay().getWidth();
+        int   prevWidth   = mEditTextView.getWidth();
+
+        switch (mFitScreenWidth) {
+            case 2:
+                return (int) Math.round(screenWidth * 0.5);
+            default:
+                return Math.round(screenWidth);
         }
     }
 
