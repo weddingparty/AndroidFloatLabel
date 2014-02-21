@@ -1,4 +1,4 @@
-apply plugin: 'android'
+apply plugin: 'android-library'
 
 repositories {
     mavenCentral()
@@ -10,19 +10,17 @@ android {
 
     defaultConfig {
         minSdkVersion 7
-        targetSdkVersion 19
+        targetSdkVersion 16
         versionCode 1
         versionName "1.0"
     }
-    buildTypes {
-        release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
-        }
+    release {
+        runProguard false
+        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
     }
 }
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
-    compile project(':floatlabelv7')
+    compile 'com.nineoldandroids:library:2.4.0'
 }

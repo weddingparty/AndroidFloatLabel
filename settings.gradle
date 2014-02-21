@@ -1,1 +1,1 @@
-include ':sample', ':floatlabel'
+include ':sample', ':floatlabel', ':floatlabelv7'
