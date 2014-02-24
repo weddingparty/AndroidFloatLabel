@@ -10,5 +10,10 @@
             <enum name="full" value="1"/>
             <enum name="half" value="2"/>
         </attr>
+        <attr name="gravity" format="enum">
+            <enum name="left" value="3" />
+            <enum name="right" value="5" />
+            <enum name="center" value="17" />
+        </attr>
     </declare-styleable>
 </resources>

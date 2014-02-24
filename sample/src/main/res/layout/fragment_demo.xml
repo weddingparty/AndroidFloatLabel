@@ -32,9 +32,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
-        floatlabel:hint="Floating Label 2"
+        floatlabel:hint="Floating Label 2 (Right gravity)"
         floatlabel:text="Text"
         floatlabel:textSize="16sp"
+        floatlabel:gravity="right"
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
@@ -58,9 +59,10 @@
         android:layout_height="wrap_content"
 
         floatlabel:fitScreenWidth="full"
-        floatlabel:hint="Fit Width (full) Example"
+        floatlabel:hint="Fit Width (full) Example (Center gravity)"
         floatlabel:text="Small txt"
         floatlabel:textSize="16sp"
+        floatlabel:gravity="center"
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
