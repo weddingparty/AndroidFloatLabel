@@ -9,6 +9,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -20,7 +21,7 @@ import android.widget.TextView;
 @TargetApi(11)
 public class FloatLabelEditText extends LinearLayout {
 
-    private int mFocusedColor, mUnFocusedColor, mFitScreenWidth,
+    private int mFocusedColor, mUnFocusedColor, mFitScreenWidth, mGravity,
                 mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
     private float mTextSizeInSp;
     private String mHintText, mEditText;
@@ -97,6 +98,7 @@ public class FloatLabelEditText extends LinearLayout {
         mFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused, android.R.color.black);
         mUnFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused, android.R.color.darker_gray);
         mFitScreenWidth = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth, 0);
+        mGravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity, Gravity.LEFT);
 
         attributesFromXmlLayout.recycle();
     }
@@ -121,6 +123,7 @@ public class FloatLabelEditText extends LinearLayout {
         mFloatingLabel.setText(mHintText);
         mFloatingLabel.setTextColor(mUnFocusedColor);
         mFloatingLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) (mTextSizeInSp / 1.3));
+        mFloatingLabel.setGravity(mGravity);
 
         mFloatingLabel.setPadding(mEditTextView.getPaddingLeft(), 0, 0, 0);
 
