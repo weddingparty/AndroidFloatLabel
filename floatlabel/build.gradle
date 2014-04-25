@@ -1,33 +1,40 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
-    }
-}
+def versionMajor = 1
+def versionMinor = 1
+def versionPatch = 0
+def versionBuild = 0
+
 apply plugin: 'android-library'
 
 repositories {
     mavenCentral()
 }
 
-android {
-    compileSdkVersion 18
-    buildToolsVersion "19.0.0"
-
-    defaultConfig {
-        minSdkVersion 7
-        targetSdkVersion 16
-        versionCode 1
-        versionName "1.0"
-    }
-    release {
-        runProguard false
-        proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+dependencies {
+    compile 'com.android.support:appcompat-v7:+'
+    androidTestCompile('com.jakewharton.espresso:espresso:1.1-r2') {
+        exclude group: 'com.squareup.dagger'
+        exclude group: 'com.google.guava'
     }
 }
 
-dependencies {
-    compile 'com.android.support:appcompat-v7:+'
+android {
+    compileSdkVersion 19
+    buildToolsVersion "19"
+
+    defaultConfig {
+        minSdkVersion 7
+        targetSdkVersion 19
+
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}" + ((versionPatch != 0) ? ".${versionPatch}" : "")
+
+        testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+    }
+
+    buildTypes {
+        release {
+            runProguard false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
 }

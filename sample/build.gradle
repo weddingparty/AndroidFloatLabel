@@ -1,26 +1,28 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:0.7.+'
-    }
-}
+def versionMajor = 1
+def versionMinor = 1
+def versionPatch = 0
+def versionBuild = 0
+
 apply plugin: 'android'
 
 repositories {
     mavenCentral()
 }
 
+dependencies {
+    compile 'com.android.support:appcompat-v7:+'
+    compile project(':floatlabel')
+}
+
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.0"
+    buildToolsVersion "19"
 
     defaultConfig {
         minSdkVersion 7
         targetSdkVersion 19
-        versionCode 1
-        versionName "1.0"
+        versionCode versionMajor * 10000 + versionMinor * 1000 + versionPatch * 100 + versionBuild
+        versionName "${versionMajor}.${versionMinor}" + ((versionPatch != 0) ? ".${versionPatch}" : "")
     }
     buildTypes {
         release {
@@ -28,9 +30,4 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
         }
     }
-}
-
-dependencies {
-    compile 'com.android.support:appcompat-v7:+'
-    compile project(':floatlabel')
 }
