@@ -83,7 +83,7 @@ public class FloatLabelEditText
         }
 
         LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        mInflater.inflate(R.layout.floatlabel_edittext, this, true);
+        mInflater.inflate(R.layout.weddingparty_floatlabel_edittext, this, true);
 
         mFloatingLabel = (TextView) findViewById(R.id.floating_label_hint);
         mEditTextView = (EditText) findViewById(R.id.floating_label_edit_text);
@@ -176,13 +176,13 @@ public class FloatLabelEditText
     private void showFloatingLabel() {
         mFloatingLabel.setVisibility(VISIBLE);
         mFloatingLabel.startAnimation(AnimationUtils.loadAnimation(getContext(),
-                                                                   R.anim.slide_from_bottom));
+                                                                   R.anim.weddingparty_floatlabel_slide_from_bottom));
     }
 
     private void hideFloatingLabel() {
         mFloatingLabel.setVisibility(INVISIBLE);
         mFloatingLabel.startAnimation(AnimationUtils.loadAnimation(getContext(),
-                                                                   R.anim.slide_to_bottom));
+                                                                   R.anim.weddingparty_floatlabel_slide_to_bottom));
     }
 
     private OnFocusChangeListener getFocusChangeListener() {
