@@ -5,7 +5,9 @@ import android.animation.ValueAnimator;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Typeface;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
@@ -24,6 +26,7 @@ public class FloatLabelEditText
     private int mFocusedColor, mUnFocusedColor, mFitScreenWidth, mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
     private float mTextSizeInSp;
     private String mHintText, mEditText;
+    private boolean mIsPassword = false;
 
     private AttributeSet mAttrs;
     private Context mContext;
@@ -100,18 +103,26 @@ public class FloatLabelEditText
         mEditText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
         mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
                                                                                         (int) mEditTextView
-                                                                                            .getTextSize()));
+                                                                                            .getTextSize()
+                                                                                       ));
         mFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
                                                          android.R.color.black);
         mUnFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
                                                            android.R.color.darker_gray);
         mFitScreenWidth = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth,
                                                          0);
-
+        mIsPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType,
+                                                      0) == 1);
         attributesFromXmlLayout.recycle();
     }
 
     private void setupEditTextView() {
+
+        if (mIsPassword) {
+            mEditTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            mEditTextView.setTypeface(Typeface.DEFAULT);
+        }
+
         mEditTextView.setHint(mHintText);
         mEditTextView.setHintTextColor(mUnFocusedColor);
         mEditTextView.setText(mEditText);

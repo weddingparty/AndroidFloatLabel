@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="FloatLabelEditText">
-        <attr name="hint" format="string"/>
-        <attr name="text" format="string"/>
-        <attr name="textSize" format="dimension"/>
-        <attr name="textColorHintFocused" format="color"/>
-        <attr name="textColorHintUnFocused" format="color"/>
         <attr name="fitScreenWidth" format="enum">
             <enum name="full" value="1"/>
             <enum name="half" value="2"/>
         </attr>
+        <attr name="hint" format="string"/>
+        <attr name="inputType" format="enum">
+            <enum name="normal" value="0"/>
+            <enum name="textPassword" value="1"/>
+        </attr>
+        <attr name="text" format="string"/>
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColorHintFocused" format="color"/>
+        <attr name="textColorHintUnFocused" format="color"/>
     </declare-styleable>
 </resources>

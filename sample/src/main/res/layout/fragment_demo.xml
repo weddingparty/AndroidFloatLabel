@@ -12,6 +12,7 @@
     <EditText
         android:id="@+id/normal_edit_text"
         android:hint="This is a normal EditText"
+        android:inputType=""
         android:layout_alignParentTop="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
@@ -64,5 +65,15 @@
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@+id/float_label_text_5"
+        android:layout_below="@id/float_label_text_4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
+        floatlabel:inputType="textPassword"
+        floatlabel:hint="Password with hints"
+        floatlabel:textSize="16sp"
+        floatlabel:textColorHintFocused="@color/holo_blue_dark"
+        floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 </RelativeLayout>
