@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <LinearLayout
     android:orientation="vertical"
     android:layout_height="wrap_content"
@@ -11,7 +10,7 @@
         android:id="@+id/floating_label_hint"
         android:visibility="invisible"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginBottom="-8dp"/>
 
     <EditText

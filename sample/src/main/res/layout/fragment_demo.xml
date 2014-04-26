@@ -1,27 +1,28 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:floatlabel="http://schemas.android.com/apk/res-auto"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingLeft="@dimen/activity_horizontal_margin"
-                android:paddingRight="@dimen/activity_horizontal_margin"
-                android:paddingTop="@dimen/activity_vertical_margin"
-                android:paddingBottom="@dimen/activity_vertical_margin"
-                tools:context="com.micromobs.android.sample.DemoActivity$PlaceholderFragment">
+<RelativeLayout
+    android:layout_height="match_parent"
+    android:layout_width="match_parent"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:floatlabel="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.micromobs.android.sample.DemoActivity$PlaceholderFragment">
 
     <EditText
         android:id="@+id/normal_edit_text"
-        android:hint="This is a normal EditText"
-        android:inputType=""
-        android:layout_alignParentTop="true"
+        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_alignParentTop="true"
+        android:hint="This is a normal EditText"
+        android:inputType=""/>
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
         android:id="@+id/float_label_text_1"
-        android:layout_below="@id/normal_edit_text"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/normal_edit_text"
 
         floatlabel:hint="Floating Label 1"
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
@@ -29,51 +30,81 @@
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
         android:id="@+id/float_label_text_2"
-        android:layout_below="@id/float_label_text_1"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/float_label_text_1"
 
         floatlabel:hint="Floating Label 2"
-        floatlabel:text="Text"
+        floatlabel:text="Sample Text"
         floatlabel:textSize="16sp"
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
         android:id="@+id/float_label_text_3"
-        android:layout_below="@id/float_label_text_2"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/float_label_text_2"
 
         floatlabel:fitScreenWidth="half"
-        floatlabel:hint="Fit Width (half) Example"
-        floatlabel:text="Small txt"
+        floatlabel:hint="Fit Width (half)"
+        floatlabel:text="Sample Text"
         floatlabel:textSize="16sp"
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
         android:id="@+id/float_label_text_4"
-        android:layout_below="@id/float_label_text_3"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/float_label_text_3"
 
         floatlabel:fitScreenWidth="full"
-        floatlabel:hint="Fit Width (full) Example"
-        floatlabel:text="Small txt"
+        floatlabel:hint="Fit Width (full)"
+        floatlabel:text="Sample Text"
         floatlabel:textSize="16sp"
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 
     <com.micromobs.android.floatlabel.FloatLabelEditText
         android:id="@+id/float_label_text_5"
-        android:layout_below="@id/float_label_text_4"
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/float_label_text_4"
 
         floatlabel:inputType="textPassword"
         floatlabel:hint="Password with hints"
         floatlabel:textSize="16sp"
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
+
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@+id/float_label_text_6"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/float_label_text_5"
+
+        floatlabel:fitScreenWidth="full"
+        floatlabel:hint="Right gravity"
+        floatlabel:text="Right gravity hint!"
+        floatlabel:textSize="16sp"
+        floatlabel:gravity="right"
+        floatlabel:textColorHintFocused="@color/holo_blue_dark"
+        floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
+
+    <com.micromobs.android.floatlabel.FloatLabelEditText
+        android:id="@+id/float_label_text_7"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/float_label_text_6"
+
+        floatlabel:fitScreenWidth="full"
+        floatlabel:text="Center Gravity hint!"
+        floatlabel:hint=""
+        floatlabel:textSize="16sp"
+        floatlabel:gravity="center"
+        floatlabel:textColorHintFocused="@color/holo_blue_dark"
+        floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
+
+
 </RelativeLayout>

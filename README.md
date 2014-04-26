@@ -23,3 +23,4 @@ Having goals for a project, keep a quality check and help with learning. Since I
 ## Developers
 
 1. [Kaushik Gopal](http://kaush.co)
+2. [Reza](http://www.moallemi.ir) - Gravity support

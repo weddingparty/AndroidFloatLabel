@@ -11,6 +11,7 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -23,7 +24,7 @@ import android.widget.TextView;
 public class FloatLabelEditText
     extends LinearLayout {
 
-    private int mFocusedColor, mUnFocusedColor, mFitScreenWidth, mCurrentApiVersion = android.os.Build.VERSION.SDK_INT;
+    private int mCurrentApiVersion = android.os.Build.VERSION.SDK_INT, mFocusedColor, mUnFocusedColor, mFitScreenWidth, mGravity;
     private float mTextSizeInSp;
     private String mHintText, mEditText;
     private boolean mIsPassword = false;
@@ -101,6 +102,7 @@ public class FloatLabelEditText
 
         mHintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
         mEditText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
+        mGravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity, Gravity.LEFT);
         mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
                                                                                         (int) mEditTextView
                                                                                             .getTextSize()
@@ -119,7 +121,8 @@ public class FloatLabelEditText
     private void setupEditTextView() {
 
         if (mIsPassword) {
-            mEditTextView.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            mEditTextView.setInputType(InputType.TYPE_CLASS_TEXT |
+                                       InputType.TYPE_TEXT_VARIATION_PASSWORD);
             mEditTextView.setTypeface(Typeface.DEFAULT);
         }
 
@@ -142,7 +145,7 @@ public class FloatLabelEditText
         mFloatingLabel.setText(mHintText);
         mFloatingLabel.setTextColor(mUnFocusedColor);
         mFloatingLabel.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) (mTextSizeInSp / 1.3));
-
+        mFloatingLabel.setGravity(mGravity);
         mFloatingLabel.setPadding(mEditTextView.getPaddingLeft(), 0, 0, 0);
 
         if (getText().length() > 0) {
