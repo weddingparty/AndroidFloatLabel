@@ -27,7 +27,7 @@ Having goals for a project, keep a quality check and help with learning. Since I
 
 ## 1. Overriding the onFocusChangeListener for the EditText
 
-If you're setting an onFocusChange listener directly on the EditText, you might lose the color changes on the hint when chaning focus. Instead set the onFocusChangeListener *directly* on the FloatLabelView itself
+If you're setting an onFocusChange listener directly on the EditText, you might lose the color changes on the hint when changing focus. You probably want to add a TextChangeListener instead.
 
 # Contributors:
 

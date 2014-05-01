@@ -73,6 +73,12 @@ public class FloatLabelEditText
         return "";
     }
 
+    public void setHint(String hintText) {
+        mHintText = hintText;
+        mFloatingLabel.setText(hintText);
+        setupEditTextView();
+    }
+
     // -----------------------------------------------------------------------
     // private helpers
 
@@ -102,7 +108,8 @@ public class FloatLabelEditText
 
         mHintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
         mEditText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
-        mGravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity, Gravity.LEFT);
+        mGravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity,
+                                                  Gravity.LEFT);
         mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
                                                                                         (int) mEditTextView
                                                                                             .getTextSize()
