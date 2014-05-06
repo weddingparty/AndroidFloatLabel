@@ -22,9 +22,10 @@ import android.widget.TextView;
 
 @TargetApi(11)
 public class FloatLabelEditText
-    extends LinearLayout {
+        extends LinearLayout {
 
-    private int mCurrentApiVersion = android.os.Build.VERSION.SDK_INT, mFocusedColor, mUnFocusedColor, mFitScreenWidth, mGravity;
+    private int mCurrentApiVersion = android.os.Build.VERSION.SDK_INT, mFocusedColor,
+            mUnFocusedColor, mFitScreenWidth, mGravity;
     private float mTextSizeInSp;
     private String mHintText, mEditText;
     private boolean mIsPassword = false;
@@ -65,9 +66,9 @@ public class FloatLabelEditText
     }
 
     public String getText() {
-        if (getEditTextString() != null &&
-            getEditTextString().toString() != null &&
-            getEditTextString().toString().length() > 0) {
+        if(getEditTextString() != null &&
+                getEditTextString().toString() != null &&
+                getEditTextString().toString().length() > 0) {
             return getEditTextString().toString();
         }
         return "";
@@ -84,11 +85,12 @@ public class FloatLabelEditText
 
     private void initializeView() {
 
-        if (mContext == null) {
+        if(mContext == null) {
             return;
         }
 
-        LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        LayoutInflater mInflater =
+                (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         mInflater.inflate(R.layout.weddingparty_floatlabel_edittext, this, true);
 
         mFloatingLabel = (TextView) findViewById(R.id.floating_label_hint);
@@ -101,35 +103,39 @@ public class FloatLabelEditText
 
     private void getAttributesFromXmlAndStoreLocally() {
         TypedArray attributesFromXmlLayout = mContext.obtainStyledAttributes(mAttrs,
-                                                                             R.styleable.FloatLabelEditText);
-        if (attributesFromXmlLayout == null) {
+                R.styleable.FloatLabelEditText);
+        if(attributesFromXmlLayout == null) {
             return;
         }
 
         mHintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
         mEditText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
         mGravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity,
-                                                  Gravity.LEFT);
-        mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
-                                                                                        (int) mEditTextView
-                                                                                            .getTextSize()
-                                                                                       ));
-        mFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
-                                                         android.R.color.black);
-        mUnFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
-                                                           android.R.color.darker_gray);
-        mFitScreenWidth = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth,
-                                                         0);
+                Gravity.LEFT);
+        mTextSizeInSp = getScaledFontSize(attributesFromXmlLayout
+                .getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
+                        (int) mEditTextView
+                                .getTextSize()
+                ));
+        mFocusedColor = attributesFromXmlLayout
+                .getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
+                        android.R.color.black);
+        mUnFocusedColor = attributesFromXmlLayout
+                .getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
+                        android.R.color.darker_gray);
+        mFitScreenWidth =
+                attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth,
+                        0);
         mIsPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType,
-                                                      0) == 1);
+                0) == 1);
         attributesFromXmlLayout.recycle();
     }
 
     private void setupEditTextView() {
 
-        if (mIsPassword) {
+        if(mIsPassword) {
             mEditTextView.setInputType(InputType.TYPE_CLASS_TEXT |
-                                       InputType.TYPE_TEXT_VARIATION_PASSWORD);
+                    InputType.TYPE_TEXT_VARIATION_PASSWORD);
             mEditTextView.setTypeface(Typeface.DEFAULT);
         }
 
@@ -139,11 +145,11 @@ public class FloatLabelEditText
         mEditTextView.setTextSize(TypedValue.COMPLEX_UNIT_SP, mTextSizeInSp);
         mEditTextView.addTextChangedListener(getTextWatcher());
 
-        if (mFitScreenWidth > 0) {
+        if(mFitScreenWidth > 0) {
             mEditTextView.setWidth(getSpecialWidth());
         }
 
-        if (mCurrentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if(mCurrentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             mEditTextView.setOnFocusChangeListener(getFocusChangeListener());
         }
     }
@@ -155,7 +161,7 @@ public class FloatLabelEditText
         mFloatingLabel.setGravity(mGravity);
         mFloatingLabel.setPadding(mEditTextView.getPaddingLeft(), 0, 0, 0);
 
-        if (getText().length() > 0) {
+        if(getText().length() > 0) {
             showFloatingLabel();
         }
     }
@@ -171,9 +177,9 @@ public class FloatLabelEditText
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0 && mFloatingLabel.getVisibility() == INVISIBLE) {
+                if(s.length() > 0 && mFloatingLabel.getVisibility() == INVISIBLE) {
                     showFloatingLabel();
-                } else if (s.length() == 0 && mFloatingLabel.getVisibility() == VISIBLE) {
+                } else if(s.length() == 0 && mFloatingLabel.getVisibility() == VISIBLE) {
                     hideFloatingLabel();
                 }
             }
@@ -183,27 +189,27 @@ public class FloatLabelEditText
     private void showFloatingLabel() {
         mFloatingLabel.setVisibility(VISIBLE);
         mFloatingLabel.startAnimation(AnimationUtils.loadAnimation(getContext(),
-                                                                   R.anim.weddingparty_floatlabel_slide_from_bottom));
+                R.anim.weddingparty_floatlabel_slide_from_bottom));
     }
 
     private void hideFloatingLabel() {
         mFloatingLabel.setVisibility(INVISIBLE);
         mFloatingLabel.startAnimation(AnimationUtils.loadAnimation(getContext(),
-                                                                   R.anim.weddingparty_floatlabel_slide_to_bottom));
+                R.anim.weddingparty_floatlabel_slide_to_bottom));
     }
 
     private OnFocusChangeListener getFocusChangeListener() {
         return new OnFocusChangeListener() {
 
             ValueAnimator mFocusToUnfocusAnimation
-                ,
-                mUnfocusToFocusAnimation;
+                    ,
+                    mUnfocusToFocusAnimation;
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 ValueAnimator lColorAnimation;
 
-                if (hasFocus) {
+                if(hasFocus) {
                     lColorAnimation = getFocusToUnfocusAnimation();
                 } else {
                     lColorAnimation = getUnfocusToFocusAnimation();
@@ -214,14 +220,14 @@ public class FloatLabelEditText
             }
 
             private ValueAnimator getFocusToUnfocusAnimation() {
-                if (mFocusToUnfocusAnimation == null) {
+                if(mFocusToUnfocusAnimation == null) {
                     mFocusToUnfocusAnimation = getFocusAnimation(mUnFocusedColor, mFocusedColor);
                 }
                 return mFocusToUnfocusAnimation;
             }
 
             private ValueAnimator getUnfocusToFocusAnimation() {
-                if (mUnfocusToFocusAnimation == null) {
+                if(mUnfocusToFocusAnimation == null) {
                     mUnfocusToFocusAnimation = getFocusAnimation(mFocusedColor, mUnFocusedColor);
                 }
                 return mUnfocusToFocusAnimation;
@@ -231,8 +237,8 @@ public class FloatLabelEditText
 
     private ValueAnimator getFocusAnimation(int fromColor, int toColor) {
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(),
-                                                              fromColor,
-                                                              toColor);
+                fromColor,
+                toColor);
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
 
             @Override
@@ -253,11 +259,12 @@ public class FloatLabelEditText
     }
 
     private int getSpecialWidth() {
-        float screenWidth = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
-                                                                                               .getWidth();
+        float screenWidth = ((WindowManager) mContext.getSystemService(Context.WINDOW_SERVICE))
+                .getDefaultDisplay()
+                .getWidth();
         int prevWidth = mEditTextView.getWidth();
 
-        switch (mFitScreenWidth) {
+        switch(mFitScreenWidth) {
             case 2:
                 return (int) Math.round(screenWidth * 0.5);
             default:
