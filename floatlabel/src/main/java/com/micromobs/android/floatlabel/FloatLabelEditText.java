@@ -21,8 +21,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 @TargetApi(11)
-public class FloatLabelEditText
-        extends LinearLayout {
+public class FloatLabelEditText extends LinearLayout {
 
     private int mCurrentApiVersion = android.os.Build.VERSION.SDK_INT, mFocusedColor,
             mUnFocusedColor, mFitScreenWidth, mGravity;
