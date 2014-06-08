@@ -14,15 +14,15 @@ import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 @TargetApi(11)
 public class FloatLabelEditText
-    extends LinearLayout {
+    extends ViewGroup {
 
     public static final double HINT_SIZE_SCALE = 0.75;
     public static final int SPACE_BETWEEN_HINT_AND_TEXT = 8;
@@ -64,6 +64,37 @@ public class FloatLabelEditText
         _context = context;
         _attributes = attributes;
         initializeView();
+    }
+
+    // -----------------------------------------------------------------------
+    // Custom ViewGroup implementation
+
+    @Override
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        final int totalWidth = MeasureSpec.getSize(widthMeasureSpec);
+
+        measureChild(_inputText, widthMeasureSpec, heightMeasureSpec);
+        int inputTextHeight = _inputText.getMeasuredHeight();
+        int floatHintHeight = (int) Math.round(inputTextHeight * HINT_SIZE_SCALE);
+
+        int totalHeight = getPaddingTop() +
+                          inputTextHeight +
+                          SPACE_BETWEEN_HINT_AND_TEXT +
+                          floatHintHeight +
+                          getPaddingBottom();
+        setMeasuredDimension(totalWidth, totalHeight);
+    }
+
+    @Override
+    public void onLayout(boolean changed, int l, int t, int r, int b) {
+        final int paddingLeft = getPaddingLeft();
+        final int paddingTop = getPaddingTop();
+
+        int currentTop = paddingTop;
+
+        // layout input text
+        // layout float hint - if visibility.SHOW
     }
 
     // -----------------------------------------------------------------------
@@ -140,8 +171,10 @@ public class FloatLabelEditText
         final int leftWithMargins = left + margins.leftMargin;
         final int topWithMargins = top + margins.topMargin;
 
-        view.layout(leftWithMargins, topWithMargins,
-                    leftWithMargins + width, topWithMargins + height);
+        view.layout(leftWithMargins,
+                    topWithMargins,
+                    leftWithMargins + width,
+                    topWithMargins + height);
     }
 
 
