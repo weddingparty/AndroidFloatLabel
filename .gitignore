@@ -33,3 +33,6 @@ proguard/
 
 # Gradle
 .gradle
+
+# Android specific files
+build
