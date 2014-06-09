@@ -11,7 +11,6 @@ import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -158,20 +157,15 @@ public class FloatLabelEditText
     }
 
     private void getAttributesFromXmlAndStoreLocally() {
+
+        _fvm = new FloatLabelViewModel(_inputText);
+
         TypedArray attributesFromXmlLayout = _context.obtainStyledAttributes(_attributes,
                                                                              R.styleable.FloatLabelEditText);
-        if (attributesFromXmlLayout == null) {
-            return;
+        if (attributesFromXmlLayout != null) {
+            _fvm.setAttributes(attributesFromXmlLayout, getContext());
         }
 
-        _hintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
-        _editText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
-        _gravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity,
-                                                  Gravity.LEFT);
-        _textSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
-                                                                                        (int) _inputText
-                                                                                                  .getTextSize()
-                                                                                       ));
         _focusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
                                                          android.R.color.black);
         _unFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
@@ -303,11 +297,6 @@ public class FloatLabelEditText
 
     private Editable getEditTextString() {
         return _inputText.getText();
-    }
-
-    private float getScaledFontSize(float fontSizeFromAttributes) {
-        float scaledDensity = getContext().getResources().getDisplayMetrics().scaledDensity;
-        return fontSizeFromAttributes / scaledDensity;
     }
 
     private int getSpecialWidth() {
