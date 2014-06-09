@@ -12,8 +12,13 @@ repositories {
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
 
-    provided 'com.jakewharton.espresso:espresso:1.1-r2'
-    androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r2'
+    androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
+    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0'
+    androidTestCompile 'com.squareup:fest-android:1.0.7'
+    androidTestCompile 'org.mockito:mockito-core:1.9.5'
+
+    provided 'com.jakewharton.espresso:espresso:1.1-r3'
+    androidTestCompile 'com.jakewharton.espresso:espresso:1.1-r3'
 }
 
 android {
@@ -28,6 +33,12 @@ android {
         versionName "${versionMajor}.${versionMinor}" + ((versionPatch != 0) ? ".${versionPatch}" : "")
 
         testInstrumentationRunner "com.google.android.apps.common.testing.testrunner.GoogleInstrumentationTestRunner"
+    }
+
+    packagingOptions {
+        exclude 'LICENSE.txt'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
     }
 
     buildTypes {

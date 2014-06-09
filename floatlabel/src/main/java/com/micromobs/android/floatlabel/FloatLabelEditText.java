@@ -24,8 +24,6 @@ import android.widget.TextView;
 public class FloatLabelEditText
     extends ViewGroup {
 
-    public static final double HINT_SIZE_SCALE = 0.75;
-    public static final int SPACE_BETWEEN_HINT_AND_TEXT = 8;
     private int _currentApiVersion = android.os.Build.VERSION.SDK_INT;
     private int _focusedColor;
     private int _unFocusedColor;
@@ -37,6 +35,8 @@ public class FloatLabelEditText
     private String _editText;
 
     private boolean _isPassword = false;
+
+    private FloatLabelViewModel _fvm;
 
     private AttributeSet _attributes;
     private Context _context;
@@ -76,11 +76,11 @@ public class FloatLabelEditText
 
         measureChild(_inputText, widthMeasureSpec, heightMeasureSpec);
         int inputTextHeight = _inputText.getMeasuredHeight();
-        int floatHintHeight = (int) Math.round(inputTextHeight * HINT_SIZE_SCALE);
+        int floatHintHeight = (int) Math.round(inputTextHeight * FloatLabelViewModel.HINT_SIZE_SCALE);
 
         int totalHeight = getPaddingTop() +
                           inputTextHeight +
-                          SPACE_BETWEEN_HINT_AND_TEXT +
+                          FloatLabelViewModel.SPACE_BETWEEN_HINT_AND_TEXT +
                           floatHintHeight +
                           getPaddingBottom();
         setMeasuredDimension(totalWidth, totalHeight);
@@ -95,6 +95,17 @@ public class FloatLabelEditText
 
         // layout input text
         // layout float hint - if visibility.SHOW
+    }
+
+    private void _layoutView(View view, int left, int top, int width, int height) {
+        MarginLayoutParams margins = (MarginLayoutParams) view.getLayoutParams();
+        final int leftWithMargins = left + margins.leftMargin;
+        final int topWithMargins = top + margins.topMargin;
+
+        view.layout(leftWithMargins,
+                    topWithMargins,
+                    leftWithMargins + width,
+                    topWithMargins + height);
     }
 
     // -----------------------------------------------------------------------
@@ -164,19 +175,6 @@ public class FloatLabelEditText
                                                       0) == 1);
         attributesFromXmlLayout.recycle();
     }
-
-
-    private void _layoutView(View view, int left, int top, int width, int height) {
-        MarginLayoutParams margins = (MarginLayoutParams) view.getLayoutParams();
-        final int leftWithMargins = left + margins.leftMargin;
-        final int topWithMargins = top + margins.topMargin;
-
-        view.layout(leftWithMargins,
-                    topWithMargins,
-                    leftWithMargins + width,
-                    topWithMargins + height);
-    }
-
 
     private void setupEditTextView() {
 

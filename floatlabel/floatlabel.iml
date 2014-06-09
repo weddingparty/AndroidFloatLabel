@@ -78,13 +78,20 @@
     <orderEntry type="library" exported="" name="dagger-1.2.1" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-19.1.0" level="project" />
     <orderEntry type="library" exported="" name="support-v4-19.1.0" level="project" />
-    <orderEntry type="library" exported="" name="espresso-runner-1.1-r2" level="project" />
     <orderEntry type="library" exported="" name="javax.annotation-api-1.2" level="project" />
     <orderEntry type="library" exported="" name="hamcrest-core-1.1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="dexmaker-mockito-1.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="fest-assert-core-2.0M10" level="project" />
+    <orderEntry type="library" exported="" name="espresso-runner-1.1-r3" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="mockito-core-1.9.5" level="project" />
     <orderEntry type="library" exported="" name="hamcrest-library-1.1" level="project" />
-    <orderEntry type="library" exported="" name="espresso-1.1-r2" level="project" />
-    <orderEntry type="library" exported="" name="espresso-runner-runtime-1.1-r2" level="project" />
+    <orderEntry type="library" exported="" name="espresso-1.1-r3" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="fest-util-1.2.5" level="project" />
+    <orderEntry type="library" exported="" name="espresso-runner-runtime-1.1-r3" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="fest-android-1.0.7" level="project" />
     <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="objenesis-1.0" level="project" />
+    <orderEntry type="library" exported="" scope="TEST" name="dexmaker-1.0" level="project" />
     <orderEntry type="library" exported="" name="guava-16.0" level="project" />
     <orderEntry type="library" exported="" name="hamcrest-integration-1.1" level="project" />
   </component>
