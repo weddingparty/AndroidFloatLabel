@@ -71,14 +71,6 @@ public class FloatLabelEditText
     // -----------------------------------------------------------------------
     // Custom ViewGroup implementation
 
-    /**
-     * Any layout manager that doesn't scroll will want this.
-     */
-    @Override
-    public boolean shouldDelayChildPressedState() {
-        return false;
-    }
-
     @Override
     public void onMeasure(int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
 
@@ -91,7 +83,9 @@ public class FloatLabelEditText
         heightUsed += _floatHint.getMeasuredHeight();
 
         final int totalWidth = MeasureSpec.getSize(parentWidthMeasureSpec);
-        final int totalHeight = heightUsed + getPaddingTop() + getPaddingBottom();
+        final int totalHeight = heightUsed +
+                                getPaddingTop() +
+                                getPaddingBottom();
 
         setMeasuredDimension(totalWidth, totalHeight);
     }
@@ -114,7 +108,11 @@ public class FloatLabelEditText
                           currentTop,
                           _inputText.getMeasuredWidth(),
                           currentTop + _inputText.getMeasuredHeight());
+    }
 
+    @Override
+    public boolean shouldDelayChildPressedState() {
+        return false;
     }
 
     // -----------------------------------------------------------------------

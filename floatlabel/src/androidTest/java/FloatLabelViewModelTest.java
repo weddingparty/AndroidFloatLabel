@@ -23,4 +23,10 @@ public class FloatLabelViewModelTest
         _fvm.setText("Some random input text");
         assertThat(_fvm.showFloatHint()).isFalse();
     }
+
+    public void test_ShouldHaveFocusedColor_WhenFocus() { }
+
+    public void test_ShouldHaveUnFocusedColor_WhenNotInFocus(){}
+
+
 }
