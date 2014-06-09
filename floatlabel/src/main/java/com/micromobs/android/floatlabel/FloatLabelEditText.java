@@ -20,6 +20,8 @@ import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import static com.micromobs.android.floatlabel.FloatLabelViewModel.SPACE_BETWEEN_HINT_AND_TEXT;
+
 @TargetApi(11)
 public class FloatLabelEditText
     extends ViewGroup {
@@ -69,20 +71,28 @@ public class FloatLabelEditText
     // -----------------------------------------------------------------------
     // Custom ViewGroup implementation
 
+    /**
+     * Any layout manager that doesn't scroll will want this.
+     */
     @Override
-    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+    public boolean shouldDelayChildPressedState() {
+        return false;
+    }
 
-        final int totalWidth = MeasureSpec.getSize(widthMeasureSpec);
+    @Override
+    public void onMeasure(int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
 
-        measureChild(_inputText, widthMeasureSpec, heightMeasureSpec);
-        int inputTextHeight = _inputText.getMeasuredHeight();
-        int floatHintHeight = (int) Math.round(inputTextHeight * FloatLabelViewModel.HINT_SIZE_SCALE);
+        int heightUsed = 0;
 
-        int totalHeight = getPaddingTop() +
-                          inputTextHeight +
-                          FloatLabelViewModel.SPACE_BETWEEN_HINT_AND_TEXT +
-                          floatHintHeight +
-                          getPaddingBottom();
+        measureChild(_inputText, parentWidthMeasureSpec, parentHeightMeasureSpec);
+        heightUsed += _inputText.getMeasuredHeight();
+
+        measureChild(_floatHint, parentWidthMeasureSpec, parentHeightMeasureSpec);
+        heightUsed += _floatHint.getMeasuredHeight();
+
+        final int totalWidth = MeasureSpec.getSize(parentWidthMeasureSpec);
+        final int totalHeight = heightUsed + getPaddingTop() + getPaddingBottom();
+
         setMeasuredDimension(totalWidth, totalHeight);
     }
 
@@ -93,19 +103,18 @@ public class FloatLabelEditText
 
         int currentTop = paddingTop;
 
-        // layout input text
-        // layout float hint - if visibility.SHOW
-    }
+        _floatHint.layout(paddingLeft,
+                          currentTop,
+                          _floatHint.getMeasuredWidth(),
+                          currentTop + _floatHint.getMeasuredHeight());
 
-    private void _layoutView(View view, int left, int top, int width, int height) {
-        MarginLayoutParams margins = (MarginLayoutParams) view.getLayoutParams();
-        final int leftWithMargins = left + margins.leftMargin;
-        final int topWithMargins = top + margins.topMargin;
+        currentTop += _floatHint.getHeight() + SPACE_BETWEEN_HINT_AND_TEXT;
 
-        view.layout(leftWithMargins,
-                    topWithMargins,
-                    leftWithMargins + width,
-                    topWithMargins + height);
+        _inputText.layout(paddingLeft,
+                          currentTop,
+                          _inputText.getMeasuredWidth(),
+                          currentTop + _inputText.getMeasuredHeight());
+
     }
 
     // -----------------------------------------------------------------------
@@ -139,8 +148,8 @@ public class FloatLabelEditText
             return;
         }
 
-        LayoutInflater inflater = (LayoutInflater) _context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        inflater.inflate(R.layout.com_micromobs_android_floatlabel, this, true);
+        LayoutInflater.from(_context)
+                      .inflate(R.layout.com_micromobs_android_floatlabel, this, true);
 
         _floatHint = (TextView) findViewById(R.id.com_micromobs_android_floatlabel_float_hint);
         _inputText = (EditText) findViewById(R.id.com_micromobs_android_floatlabel_input_text);
@@ -206,9 +215,9 @@ public class FloatLabelEditText
         _floatHint.setGravity(_gravity);
         _floatHint.setPadding(_inputText.getPaddingLeft(), 0, 0, 0);
 
-        if (getText().length() > 0) {
-            showFloatingLabel();
-        }
+        //        if (getText().length() > 0) {
+        showFloatingLabel();
+        //        }
     }
 
     private TextWatcher getTextWatcher() {
@@ -222,11 +231,11 @@ public class FloatLabelEditText
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0 && _floatHint.getVisibility() == INVISIBLE) {
+                /*if (s.length() > 0 && _floatHint.getVisibility() == INVISIBLE) {
                     showFloatingLabel();
                 } else if (s.length() == 0 && _floatHint.getVisibility() == VISIBLE) {
                     hideFloatingLabel();
-                }
+                }*/
             }
         };
     }

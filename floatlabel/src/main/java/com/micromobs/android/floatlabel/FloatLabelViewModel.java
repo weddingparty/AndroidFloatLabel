@@ -5,7 +5,7 @@ import com.google.common.base.Strings;
 public class FloatLabelViewModel {
 
     public static final double HINT_SIZE_SCALE = 0.75;
-    public static final int SPACE_BETWEEN_HINT_AND_TEXT = 8;
+    public static final int SPACE_BETWEEN_HINT_AND_TEXT = -10;
     private String _inputText = "";
     private String _floatHintText = "";
     private boolean _isPassword = false;
