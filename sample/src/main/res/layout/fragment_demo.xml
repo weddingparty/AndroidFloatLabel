@@ -100,11 +100,10 @@
 
         floatlabel:fitScreenWidth="full"
         floatlabel:text="Center Gravity hint!"
-        floatlabel:hint=""
+        floatlabel:hint="Center gravity"
         floatlabel:textSize="16sp"
         floatlabel:gravity="center"
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
-
 
 </RelativeLayout>
