@@ -63,6 +63,15 @@ public class FloatLabelEditText
     public EditText getEditText() {
         return mEditTextView;
     }
+    
+    /**
+	 * Set text to the edit text
+	 * 
+	 * @param text
+	 */
+	public void setText(String text) {
+		mEditTextView.setText(text);
+	}
 
     public String getText() {
         if (getEditTextString() != null &&
