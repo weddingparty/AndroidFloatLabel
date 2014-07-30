@@ -1,5 +1,7 @@
 package com.micromobs.android.floatlabel;
 
+import android.widget.EditText;
+
 public class FloatLabelViewHelper {
 
     public static final int SPACE_BETWEEN_HINT_AND_TEXT = -20;
@@ -33,5 +35,9 @@ public class FloatLabelViewHelper {
         }
 
         return defaultInputTextWidth;
+    }
+
+    public boolean shouldShowFloatingLabel(int inputTextLength) {
+        return inputTextLength > 0;
     }
 }

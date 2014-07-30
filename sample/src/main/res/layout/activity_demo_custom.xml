@@ -15,7 +15,7 @@
 
 
         floatlabel:hint="Floating Label 1"
-        floatlabel:text="Something Else"
+        floatlabel:text=""
         floatlabel:textColorHintFocused="@color/holo_blue_dark"
         floatlabel:textColorHintUnFocused="@android:color/darker_gray"/>
 </LinearLayout>

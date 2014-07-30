@@ -6,7 +6,6 @@
 
     <TextView
         android:id="@+id/com.micromobs.android.floatlabel.float_hint"
-        android:background="@android:color/holo_blue_bright"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"/>
 

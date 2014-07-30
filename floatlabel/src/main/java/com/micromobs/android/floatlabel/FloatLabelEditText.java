@@ -222,12 +222,12 @@ public class FloatLabelEditText
     }
 
     private void setupFloatingLabel() {
+        _floatHint.setGravity(_gravity);
         _floatHint.setText(_hintText);
         _floatHint.setTextColor(_unFocusedColor);
         _floatHint.setTextSize(TypedValue.COMPLEX_UNIT_SP, _fvh.getFloatHintSizeInSp());
-        _floatHint.setGravity(_gravity);
 
-        showFloatingLabel();
+        showOrHideFloatingLabel(false);
     }
 
     private TextWatcher getTextWatcher() {
@@ -242,25 +242,23 @@ public class FloatLabelEditText
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() > 0 && _floatHint.getVisibility() == INVISIBLE) {
-                    showFloatingLabel();
-                } else if (s.length() == 0 && _floatHint.getVisibility() == VISIBLE) {
-                    hideFloatingLabel();
-                }
+                showOrHideFloatingLabel(_floatHint.getVisibility() == VISIBLE);
             }
         };
     }
 
-    private void showFloatingLabel() {
-        _floatHint.setVisibility(VISIBLE);
-        _floatHint.startAnimation(AnimationUtils.loadAnimation(getContext(),
-                                                               R.anim.weddingparty_floatlabel_slide_from_bottom));
-    }
+    private void showOrHideFloatingLabel(boolean currentlyShowing) {
+        if (!currentlyShowing && _fvh.shouldShowFloatingLabel(_inputText.length())) {
+            _floatHint.setVisibility(VISIBLE);
+            _floatHint.startAnimation(AnimationUtils.loadAnimation(getContext(),
+                                                                   R.anim.weddingparty_floatlabel_slide_from_bottom));
+        }
 
-    private void hideFloatingLabel() {
-        _floatHint.setVisibility(INVISIBLE);
-        _floatHint.startAnimation(AnimationUtils.loadAnimation(getContext(),
-                                                               R.anim.weddingparty_floatlabel_slide_to_bottom));
+        if (!_fvh.shouldShowFloatingLabel(_inputText.length())) {
+            _floatHint.setVisibility(INVISIBLE);
+            _floatHint.startAnimation(AnimationUtils.loadAnimation(getContext(),
+                                                                   R.anim.weddingparty_floatlabel_slide_to_bottom));
+        }
     }
 
     private OnFocusChangeListener getFocusChangeListener() {
