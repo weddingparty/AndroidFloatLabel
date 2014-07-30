@@ -1,16 +1,16 @@
-def versionMajor = 1
-def versionMinor = 2
-def versionPatch = 1
+def versionMajor = 2
+def versionMinor = 0
+def versionPatch = 0
 def versionBuild = 0
 
-apply plugin: 'android-library'
+apply plugin: 'com.android.library'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:+'
+    compile "com.android.support:appcompat-v7:20.0.+"
 
     androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
     androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0'
