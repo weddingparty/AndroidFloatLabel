@@ -15,7 +15,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -24,15 +23,10 @@ import android.widget.TextView;
 public class FloatLabelEditText
     extends ViewGroup {
 
-    public static final double HINT_SIZE_SCALE = 0.75;
-    public static final int SPACE_BETWEEN_HINT_AND_TEXT = -10;
-
     private int _currentApiVersion = android.os.Build.VERSION.SDK_INT;
     private int _focusedColor;
     private int _unFocusedColor;
-    private int _fitScreenWidth;
     private int _gravity;
-    private float _textSizeInSp;
 
     private String _hintText;
     private String _editText;
@@ -43,6 +37,7 @@ public class FloatLabelEditText
     private Context _context;
     private EditText _inputText;
     private TextView _floatHint;
+    private FloatLabelViewHelper _fvh;
 
     // -----------------------------------------------------------------------
     // default constructors
@@ -70,52 +65,79 @@ public class FloatLabelEditText
     // -----------------------------------------------------------------------
     // Custom ViewGroup implementation
 
+    /**
+     * This method helps the app understand the precise dimensions of this view
+     * including any child views.
+     *
+     * This is done by:
+     * 1. specifying dimensions of each child view (measureChild)
+     * 2. calculating the overall dimensions by adding up the child view dimensions + padding (as Android expects every individual view to control its padding)
+     * 3. setting the overall dimensions (setMeasureDimension)
+     *
+     * @param widthMeasureSpec  packed data that gives us two attributes(mode & size) for the width of this whole view
+     * @param heightMeasureSpec packed data that gives us two attributes(mode & size) for the height of this whole view
+     */
     @Override
-    public void onMeasure(int parentWidthMeasureSpec, int parentHeightMeasureSpec) {
+    public void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 
-        int heightUsed = 0;
+        // 1. -------------------------------------------------------------------------------------------
+        // measureChild measures the view thus allowing us to get individual heights/widths from the children
+        measureChild(_inputText, widthMeasureSpec, heightMeasureSpec);
+        measureChild(_floatHint, widthMeasureSpec, heightMeasureSpec);
 
-        measureChild(_inputText, parentWidthMeasureSpec, parentHeightMeasureSpec);
-        heightUsed += _inputText.getMeasuredHeight();
-
-        measureChild(_floatHint, parentWidthMeasureSpec, parentHeightMeasureSpec);
-        heightUsed += _floatHint.getMeasuredHeight();
-
-        final int totalWidth = MeasureSpec.getSize(parentWidthMeasureSpec);
-        final int totalHeight = heightUsed +
+        // 2. -------------------------------------------------------------------------------------------
+        final int totalWidth = MeasureSpec.getSize(widthMeasureSpec);
+        final int totalHeight = _inputText.getMeasuredHeight() +
+                                _floatHint.getMeasuredHeight() +
                                 getPaddingTop() +
                                 getPaddingBottom();
 
+        // 3. -------------------------------------------------------------------------------------------
         setMeasuredDimension(totalWidth, totalHeight);
     }
 
+
+    /**
+     * This method helps the app understand how to layout each child in the view
+     * given the dimensions from {@link #onMeasure(int, int)}
+     */
     @Override
-    public void onLayout(boolean changed, int l, int t, int r, int b) {
-        final int paddingLeft = getPaddingLeft();
-        final int paddingTop = getPaddingTop();
+    public void onLayout(boolean changed,
+                         int parentLeftCoordinate,
+                         int parentTopCoordinate,
+                         int rightCoordinate,
+                         int bottomCoordinate) {
 
-        int currentTop = paddingTop;
+        final int heightTakenByFloatHint = getPaddingTop() + _floatHint.getMeasuredHeight();
 
-        _floatHint.layout(paddingLeft,
-                          currentTop,
+        // layout the Input Text
+        _inputText.layout(getPaddingLeft(),
+                          heightTakenByFloatHint + FloatLabelViewHelper.SPACE_BETWEEN_HINT_AND_TEXT,
+                          _fvh.getRightCoordinateForInputText(getMeasuredWidth(),
+                                                              _inputText.getMeasuredWidth()),
+                          heightTakenByFloatHint +
+                          FloatLabelViewHelper.SPACE_BETWEEN_HINT_AND_TEXT +
+                          _inputText.getMeasuredHeight());
+
+        // layout the Float Hint
+        _floatHint.layout(getPaddingLeft() + _inputText.getPaddingLeft(),
+                          getPaddingTop(),
                           _floatHint.getMeasuredWidth(),
-                          currentTop + _floatHint.getMeasuredHeight());
+                          heightTakenByFloatHint);
 
-        currentTop += _floatHint.getHeight() + SPACE_BETWEEN_HINT_AND_TEXT;
 
-        _inputText.layout(paddingLeft,
-                          currentTop,
-                          _inputText.getMeasuredWidth(),
-                          currentTop + _inputText.getMeasuredHeight());
     }
 
+    /**
+     * The default is true and is only required if your container is scrollable
+     */
     @Override
     public boolean shouldDelayChildPressedState() {
         return false;
     }
 
     // -----------------------------------------------------------------------
-    // public interface
+    // public API
 
     public EditText getEditText() {
         return _inputText;
@@ -149,6 +171,7 @@ public class FloatLabelEditText
 
         _floatHint = (TextView) findViewById(R.id.com_micromobs_android_floatlabel_float_hint);
         _inputText = (EditText) findViewById(R.id.com_micromobs_android_floatlabel_input_text);
+        _fvh = new FloatLabelViewHelper();
 
         getAttributesFromXmlAndStoreLocally();
         setupEditTextView();
@@ -165,15 +188,18 @@ public class FloatLabelEditText
         _hintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
         _editText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
         _gravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity, Gravity.LEFT);
-        _textSizeInSp = getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
-                                                                                        (int) _inputText.getTextSize()));
+        _isPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType, 0) == 1);
+
         _focusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
                                                          android.R.color.black);
         _unFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
                                                            android.R.color.darker_gray);
-        _fitScreenWidth = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth,
-                                                         0);
-        _isPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType, 0) == 1);
+
+        _fvh.setInputTextSizeInSp(getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
+                                                                                                  (int) _inputText
+                                                                                                            .getTextSize())));
+        _fvh.setFitScreenWidth(attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth,
+                                                              0));
         attributesFromXmlLayout.recycle();
     }
 
@@ -187,12 +213,8 @@ public class FloatLabelEditText
         _inputText.setHint(_hintText);
         _inputText.setHintTextColor(_unFocusedColor);
         _inputText.setText(_editText);
-        _inputText.setTextSize(TypedValue.COMPLEX_UNIT_SP, _textSizeInSp);
+        _inputText.setTextSize(_fvh.getInputTextSizeInSp());
         _inputText.addTextChangedListener(getTextWatcher());
-
-        if (_fitScreenWidth > 0) {
-            _inputText.setWidth(getSpecialWidth());
-        }
 
         if (_currentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
             _inputText.setOnFocusChangeListener(getFocusChangeListener());
@@ -202,13 +224,10 @@ public class FloatLabelEditText
     private void setupFloatingLabel() {
         _floatHint.setText(_hintText);
         _floatHint.setTextColor(_unFocusedColor);
-        _floatHint.setTextSize(TypedValue.COMPLEX_UNIT_SP, (float) (_textSizeInSp / 1.3));
+        _floatHint.setTextSize(TypedValue.COMPLEX_UNIT_SP, _fvh.getFloatHintSizeInSp());
         _floatHint.setGravity(_gravity);
-        _floatHint.setPadding(_inputText.getPaddingLeft(), 0, 0, 0);
 
-        //        if (getText().length() > 0) {
         showFloatingLabel();
-        //        }
     }
 
     private TextWatcher getTextWatcher() {
@@ -303,19 +322,5 @@ public class FloatLabelEditText
         float scaledDensity = getContext().getResources().getDisplayMetrics().scaledDensity;
         return fontSizeFromAttributes / scaledDensity;
     }
-
-    private int getSpecialWidth() {
-        float screenWidth = ((WindowManager) _context.getSystemService(Context.WINDOW_SERVICE)).getDefaultDisplay()
-                                                                                               .getWidth();
-        int prevWidth = _inputText.getWidth();
-
-        switch (_fitScreenWidth) {
-            case 2:
-                return (int) Math.round(screenWidth * 0.5);
-            default:
-                return Math.round(screenWidth);
-        }
-    }
-
 
 }
