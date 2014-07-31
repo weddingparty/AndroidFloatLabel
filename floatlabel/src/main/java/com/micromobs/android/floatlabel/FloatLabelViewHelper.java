@@ -58,11 +58,11 @@ public class FloatLabelViewHelper {
         boolean floatHintVisible = floatHint.getAlpha() != 0;
 
         if (!floatHintVisible && inputText.length() > 0) {
-            FloatLabelAnimationHelper.getFloatHintShowAnimation(floatHint).start();
+            FloatLabelAnimationHelper.getFloatHintShowHideAnimation(floatHint, true).start();
         }
 
         if (floatHintVisible && inputText.length() < 1) {
-            FloatLabelAnimationHelper.getFloatHintHideAnimation(floatHint).start();
+            FloatLabelAnimationHelper.getFloatHintShowHideAnimation(floatHint, false).start();
         }
     }
 }

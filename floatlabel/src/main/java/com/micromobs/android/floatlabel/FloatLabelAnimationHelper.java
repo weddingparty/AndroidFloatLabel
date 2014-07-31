@@ -7,36 +7,24 @@ import android.widget.TextView;
 
 public class FloatLabelAnimationHelper {
 
-    public static ObjectAnimator getFloatHintShowAnimation(TextView floatHint) {
-        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y", 0);
-        PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
-        return ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350);
-    }
+    public static ObjectAnimator getFloatHintShowHideAnimation(TextView floatHint, boolean showHint) {
 
-    public static ObjectAnimator getFloatHintHideAnimation(TextView floatHint) {
-        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y",
-                                                                 (float) (0.2 * floatHint.getHeight()));
-        PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0f);
+        final float y = showHint ? 0 : (float) (0.2 * floatHint.getHeight());
+        final float alpha = showHint ? 1f : 0f;
+
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y", y);
+        PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", alpha);
+
         return ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350);
     }
 
     public static ObjectAnimator getFloatHintColorChangeAnimation(final TextView floatHint,
                                                                   final FloatLabelViewHelper fvh,
                                                                   final boolean hasFocus) {
-        ObjectAnimator colorAnimation;
-        if (hasFocus) {
-            colorAnimation = ObjectAnimator.ofInt(floatHint,
-                                                  "textColor",
-                                                  fvh.getUnFocusedColor(),
-                                                  fvh.getFocusedColor());
+        final int fromColor = hasFocus ? fvh.getUnFocusedColor() : fvh.getFocusedColor();
+        final int toColor = hasFocus ? fvh.getFocusedColor() : fvh.getUnFocusedColor();
 
-        } else {
-            colorAnimation = ObjectAnimator.ofInt(floatHint,
-                                                  "textColor",
-                                                  fvh.getFocusedColor(),
-                                                  fvh.getUnFocusedColor());
-
-        }
+        ObjectAnimator colorAnimation = ObjectAnimator.ofInt(floatHint, "textColor", fromColor, toColor);
         colorAnimation.setEvaluator(new ArgbEvaluator());
         return colorAnimation;
     }
