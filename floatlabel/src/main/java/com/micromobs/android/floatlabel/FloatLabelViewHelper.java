@@ -1,7 +1,5 @@
 package com.micromobs.android.floatlabel;
 
-import android.animation.ObjectAnimator;
-import android.animation.PropertyValuesHolder;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -60,17 +58,11 @@ public class FloatLabelViewHelper {
         boolean floatHintVisible = floatHint.getAlpha() != 0;
 
         if (!floatHintVisible && inputText.length() > 0) {
-            PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y", 0);
-            PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
-            ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350).start();
+            FloatLabelAnimationHelper.getFloatHintShowAnimation(floatHint).start();
         }
 
         if (floatHintVisible && inputText.length() < 1) {
-            PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y",
-                                                                     (float) (0.2 *
-                                                                              floatHint.getHeight()));
-            PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0f);
-            ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350).start();
+            FloatLabelAnimationHelper.getFloatHintHideAnimation(floatHint).start();
         }
     }
 }

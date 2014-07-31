@@ -1,58 +1,31 @@
 package com.micromobs.android.floatlabel;
 
 import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
 import android.animation.ValueAnimator;
 import android.view.View;
 import android.widget.TextView;
 
 public class FloatLabelAnimationHelper {
 
+    public static ObjectAnimator getFloatHintShowAnimation(TextView floatHint) {
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y", 0);
+        PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
+        return ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350);
+    }
 
-    public static View.OnFocusChangeListener getFocusChangeListener(final FloatLabelViewHelper fvh,
-                                                                    final TextView floatHint) {
-        return new View.OnFocusChangeListener() {
-
-
-            ValueAnimator _focusToUnfocus, _unfocusToFocus;
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ValueAnimator lColorAnimation;
-
-                if (hasFocus) {
-                    lColorAnimation = getFocusToUnfocusAnimation();
-                } else {
-                    lColorAnimation = getUnfocusToFocusAnimation();
-                }
-
-                lColorAnimation.setDuration(700);
-                lColorAnimation.start();
-            }
-
-            private ValueAnimator getFocusToUnfocusAnimation() {
-                if (_focusToUnfocus == null) {
-                    _focusToUnfocus = _getFocusAnimation(floatHint,
-                                                         fvh.getUnFocusedColor(),
-                                                         fvh.getFocusedColor());
-                }
-                return _focusToUnfocus;
-            }
-
-            private ValueAnimator getUnfocusToFocusAnimation() {
-                if (_unfocusToFocus == null) {
-                    _unfocusToFocus = _getFocusAnimation(floatHint,
-                                                         fvh.getUnFocusedColor(),
-                                                         fvh.getFocusedColor());
-                }
-                return _unfocusToFocus;
-            }
-        };
+    public static ObjectAnimator getFloatHintHideAnimation(TextView floatHint) {
+        PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y",
+                                                                 (float) (0.2 * floatHint.getHeight()));
+        PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0f);
+        return ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350);
     }
 
 
-    private static ValueAnimator _getFocusAnimation(final TextView floatHint,
-                                                    final int fromColor,
-                                                    final int toColor) {
+    public static ValueAnimator getFocusAnimation(final TextView floatHint,
+                                                  final int fromColor,
+                                                  final int toColor) {
 
         ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, toColor);
         colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
