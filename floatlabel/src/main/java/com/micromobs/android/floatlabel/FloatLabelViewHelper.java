@@ -2,9 +2,6 @@ package com.micromobs.android.floatlabel;
 
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.annotation.TargetApi;
-import android.os.Build;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -60,20 +57,19 @@ public class FloatLabelViewHelper {
     }
 
     public void showOrHideFloatingLabel(EditText inputText, TextView floatHint) {
-
         boolean floatHintVisible = floatHint.getAlpha() != 0;
 
         if (!floatHintVisible && inputText.length() > 0) {
-            PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat(View.Y, 0);
-            PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f, 1f);
+            PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y", 0);
+            PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0f, 1f);
             ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350).start();
         }
 
         if (floatHintVisible && inputText.length() < 1) {
-            PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat(View.Y,
+            PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat("y",
                                                                      (float) (0.2 *
                                                                               floatHint.getHeight()));
-            PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f);
+            PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat("alpha", 0f);
             ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350).start();
         }
     }
