@@ -3,8 +3,6 @@ package com.micromobs.android.floatlabel;
 import android.animation.ArgbEvaluator;
 import android.animation.ObjectAnimator;
 import android.animation.PropertyValuesHolder;
-import android.animation.ValueAnimator;
-import android.view.View;
 import android.widget.TextView;
 
 public class FloatLabelAnimationHelper {
@@ -22,20 +20,24 @@ public class FloatLabelAnimationHelper {
         return ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350);
     }
 
+    public static ObjectAnimator getFloatHintColorChangeAnimation(final TextView floatHint,
+                                                                  final FloatLabelViewHelper fvh,
+                                                                  final boolean hasFocus) {
+        ObjectAnimator colorAnimation;
+        if (hasFocus) {
+            colorAnimation = ObjectAnimator.ofInt(floatHint,
+                                                  "textColor",
+                                                  fvh.getUnFocusedColor(),
+                                                  fvh.getFocusedColor());
 
-    public static ValueAnimator getFocusAnimation(final TextView floatHint,
-                                                  final int fromColor,
-                                                  final int toColor) {
+        } else {
+            colorAnimation = ObjectAnimator.ofInt(floatHint,
+                                                  "textColor",
+                                                  fvh.getFocusedColor(),
+                                                  fvh.getUnFocusedColor());
 
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, toColor);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                floatHint.setTextColor((Integer) animator.getAnimatedValue());
-            }
-        });
+        }
+        colorAnimation.setEvaluator(new ArgbEvaluator());
         return colorAnimation;
     }
 }

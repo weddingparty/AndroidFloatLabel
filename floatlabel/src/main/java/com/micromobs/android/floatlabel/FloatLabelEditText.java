@@ -1,6 +1,5 @@
 package com.micromobs.android.floatlabel;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -252,40 +251,11 @@ public class FloatLabelEditText
         return new OnFocusChangeListener() {
 
 
-            ValueAnimator _focusToUnfocus
-                ,
-                _unfocusToFocus;
-
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                ValueAnimator lColorAnimation;
-
-                if (hasFocus) {
-                    lColorAnimation = getUnfocusToFocusAnimation();
-                } else {
-                    lColorAnimation = getFocusToUnfocusAnimation();
-                }
-
-                lColorAnimation.setDuration(700);
-                lColorAnimation.start();
-            }
-
-            private ValueAnimator getFocusToUnfocusAnimation() {
-                if (_focusToUnfocus == null) {
-                    _focusToUnfocus = FloatLabelAnimationHelper.getFocusAnimation(_floatHintView,
-                                                                                  _fvh.getFocusedColor(),
-                                                                                  _fvh.getUnFocusedColor());
-                }
-                return _focusToUnfocus;
-            }
-
-            private ValueAnimator getUnfocusToFocusAnimation() {
-                if (_unfocusToFocus == null) {
-                    _unfocusToFocus = FloatLabelAnimationHelper.getFocusAnimation(_floatHintView,
-                                                                                  _fvh.getUnFocusedColor(),
-                                                                                  _fvh.getFocusedColor());
-                }
-                return _unfocusToFocus;
+                FloatLabelAnimationHelper.getFloatHintColorChangeAnimation(_floatHintView,
+                                                                           _fvh,
+                                                                           hasFocus).start();
             }
         };
     }
