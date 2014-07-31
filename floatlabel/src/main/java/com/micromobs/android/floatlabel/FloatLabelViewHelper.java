@@ -13,6 +13,8 @@ public class FloatLabelViewHelper {
     public static final float HINT_SIZE_SCALE = 0.75f;
     public int _fitScreenWidth;
     private float _inputTextSizeInSp;
+    private int _focusedColor;
+    private int _unFocusedColor;
 
     public void setFitScreenWidth(int fitScreenWidth) {
         _fitScreenWidth = fitScreenWidth;
@@ -28,6 +30,22 @@ public class FloatLabelViewHelper {
 
     public float getFloatHintSizeInSp() {
         return _inputTextSizeInSp * HINT_SIZE_SCALE;
+    }
+
+    public int getUnFocusedColor() {
+        return _unFocusedColor;
+    }
+
+    public void setUnFocusedColor(int unFocusedColor) {
+        _unFocusedColor = unFocusedColor;
+    }
+
+    public int getFocusedColor() {
+        return _focusedColor;
+    }
+
+    public void setFocusedColor(int focusedColor) {
+        _focusedColor = focusedColor;
     }
 
     public int getRightCoordinateForInputText(int parentWidth, int defaultInputTextWidth) {

@@ -1,8 +1,5 @@
 package com.micromobs.android.floatlabel;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
-import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
@@ -13,18 +10,14 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.TextView;
 
-@TargetApi(11)
 public class FloatLabelEditText
     extends ViewGroup {
 
     private int _currentApiVersion = android.os.Build.VERSION.SDK_INT;
-    private int _focusedColor;
-    private int _unFocusedColor;
     private int _gravity;
 
     private String _hintText;
@@ -189,11 +182,10 @@ public class FloatLabelEditText
         _gravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity, Gravity.LEFT);
         _isPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType, 0) == 1);
 
-        _focusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
-                                                         android.R.color.black);
-        _unFocusedColor = attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
-                                                           android.R.color.darker_gray);
-
+        _fvh.setFocusedColor(attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
+                                                              android.R.color.black));
+        _fvh.setUnFocusedColor(attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
+                                                                android.R.color.darker_gray));
         _fvh.setInputTextSizeInSp(getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
                                                                                                   (int) _inputText
                                                                                                             .getTextSize())));
@@ -210,20 +202,21 @@ public class FloatLabelEditText
         }
 
         _inputText.setHint(_hintText);
-        _inputText.setHintTextColor(_unFocusedColor);
+        _inputText.setHintTextColor(_fvh.getUnFocusedColor());
         _inputText.setText(_editText);
         _inputText.setTextSize(_fvh.getInputTextSizeInSp());
         _inputText.addTextChangedListener(getTextWatcher());
 
         if (_currentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            _inputText.setOnFocusChangeListener(getFocusChangeListener());
+            _inputText.setOnFocusChangeListener(FloatLabelAnimationHelper.getFocusChangeListener(_fvh,
+                                                                                                 _floatHint));
         }
     }
 
     private void setupFloatingLabel() {
         _floatHint.setGravity(_gravity);
         _floatHint.setText(_hintText);
-        _floatHint.setTextColor(_unFocusedColor);
+        _floatHint.setTextColor(_fvh.getUnFocusedColor());
         _floatHint.setTextSize(TypedValue.COMPLEX_UNIT_SP, _fvh.getFloatHintSizeInSp());
 
         _fvh.showOrHideFloatingLabel(_inputText, _floatHint);
@@ -246,56 +239,6 @@ public class FloatLabelEditText
         };
     }
 
-    private OnFocusChangeListener getFocusChangeListener() {
-        return new OnFocusChangeListener() {
-
-
-            ValueAnimator _focusToUnfocus
-                ,
-                unfocusToFocus;
-
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ValueAnimator lColorAnimation;
-
-                if (hasFocus) {
-                    lColorAnimation = getFocusToUnfocusAnimation();
-                } else {
-                    lColorAnimation = getUnfocusToFocusAnimation();
-                }
-
-                lColorAnimation.setDuration(700);
-                lColorAnimation.start();
-            }
-
-            private ValueAnimator getFocusToUnfocusAnimation() {
-                if (_focusToUnfocus == null) {
-                    _focusToUnfocus = getFocusAnimation(_unFocusedColor, _focusedColor);
-                }
-                return _focusToUnfocus;
-            }
-
-            private ValueAnimator getUnfocusToFocusAnimation() {
-                if (unfocusToFocus == null) {
-                    unfocusToFocus = getFocusAnimation(_focusedColor, _unFocusedColor);
-                }
-                return unfocusToFocus;
-            }
-        };
-    }
-
-    private ValueAnimator getFocusAnimation(int fromColor, int toColor) {
-        ValueAnimator colorAnimation = ValueAnimator.ofObject(new ArgbEvaluator(), fromColor, toColor);
-        colorAnimation.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
-
-
-            @Override
-            public void onAnimationUpdate(ValueAnimator animator) {
-                _floatHint.setTextColor((Integer) animator.getAnimatedValue());
-            }
-        });
-        return colorAnimation;
-    }
 
     private Editable getEditTextString() {
         return _inputText.getText();
