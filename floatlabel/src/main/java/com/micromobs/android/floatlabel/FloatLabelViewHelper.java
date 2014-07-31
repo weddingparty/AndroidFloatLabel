@@ -1,6 +1,11 @@
 package com.micromobs.android.floatlabel;
 
+import android.view.View;
+import android.view.animation.AnimationUtils;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import static android.view.View.VISIBLE;
 
 public class FloatLabelViewHelper {
 
@@ -29,15 +34,24 @@ public class FloatLabelViewHelper {
         if (_fitScreenWidth == 1) {
             return parentWidth;
         }
-
         if (_fitScreenWidth == 2) {
             return (int) Math.round(parentWidth * 0.5);
         }
-
         return defaultInputTextWidth;
     }
 
-    public boolean shouldShowFloatingLabel(int inputTextLength) {
-        return inputTextLength > 0;
+    public void showOrHideFloatingLabel(EditText inputText, TextView floatHint) {
+        boolean currentlyShowing = floatHint.getVisibility() == VISIBLE;
+
+        if (!currentlyShowing && inputText.length() > 0) {
+            floatHint.setVisibility(VISIBLE);
+            floatHint.startAnimation(AnimationUtils.loadAnimation(floatHint.getContext(),
+                                                                  R.anim.weddingparty_floatlabel_slide_from_bottom));
+        }
+        if (currentlyShowing && inputText.length() < 1) {
+            floatHint.setVisibility(View.INVISIBLE);
+            floatHint.startAnimation(AnimationUtils.loadAnimation(floatHint.getContext(),
+                                                                  R.anim.weddingparty_floatlabel_slide_to_bottom));
+        }
     }
 }

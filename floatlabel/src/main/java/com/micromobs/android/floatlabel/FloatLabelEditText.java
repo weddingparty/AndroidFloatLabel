@@ -15,7 +15,6 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -227,7 +226,7 @@ public class FloatLabelEditText
         _floatHint.setTextColor(_unFocusedColor);
         _floatHint.setTextSize(TypedValue.COMPLEX_UNIT_SP, _fvh.getFloatHintSizeInSp());
 
-        showOrHideFloatingLabel(false);
+        _fvh.showOrHideFloatingLabel(_inputText, _floatHint);
     }
 
     private TextWatcher getTextWatcher() {
@@ -242,32 +241,18 @@ public class FloatLabelEditText
 
             @Override
             public void afterTextChanged(Editable s) {
-                showOrHideFloatingLabel(_floatHint.getVisibility() == VISIBLE);
+                _fvh.showOrHideFloatingLabel(_inputText, _floatHint);
             }
         };
-    }
-
-    private void showOrHideFloatingLabel(boolean currentlyShowing) {
-        if (!currentlyShowing && _fvh.shouldShowFloatingLabel(_inputText.length())) {
-            _floatHint.setVisibility(VISIBLE);
-            _floatHint.startAnimation(AnimationUtils.loadAnimation(getContext(),
-                                                                   R.anim.weddingparty_floatlabel_slide_from_bottom));
-        }
-
-        if (!_fvh.shouldShowFloatingLabel(_inputText.length())) {
-            _floatHint.setVisibility(INVISIBLE);
-            _floatHint.startAnimation(AnimationUtils.loadAnimation(getContext(),
-                                                                   R.anim.weddingparty_floatlabel_slide_to_bottom));
-        }
     }
 
     private OnFocusChangeListener getFocusChangeListener() {
         return new OnFocusChangeListener() {
 
 
-            ValueAnimator mFocusToUnfocusAnimation
+            ValueAnimator _focusToUnfocus
                 ,
-                mUnfocusToFocusAnimation;
+                unfocusToFocus;
 
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -284,17 +269,17 @@ public class FloatLabelEditText
             }
 
             private ValueAnimator getFocusToUnfocusAnimation() {
-                if (mFocusToUnfocusAnimation == null) {
-                    mFocusToUnfocusAnimation = getFocusAnimation(_unFocusedColor, _focusedColor);
+                if (_focusToUnfocus == null) {
+                    _focusToUnfocus = getFocusAnimation(_unFocusedColor, _focusedColor);
                 }
-                return mFocusToUnfocusAnimation;
+                return _focusToUnfocus;
             }
 
             private ValueAnimator getUnfocusToFocusAnimation() {
-                if (mUnfocusToFocusAnimation == null) {
-                    mUnfocusToFocusAnimation = getFocusAnimation(_focusedColor, _unFocusedColor);
+                if (unfocusToFocus == null) {
+                    unfocusToFocus = getFocusAnimation(_focusedColor, _unFocusedColor);
                 }
-                return mUnfocusToFocusAnimation;
+                return unfocusToFocus;
             }
         };
     }
