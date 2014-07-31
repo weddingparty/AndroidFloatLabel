@@ -2,6 +2,7 @@ package com.micromobs.android.floatlabel;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.text.Editable;
 import android.text.InputType;
@@ -181,9 +182,9 @@ public class FloatLabelEditText
         _isPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType, 0) == 1);
 
         _fvh.setFocusedColor(attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintFocused,
-                                                              android.R.color.black));
+                                                              Color.parseColor("#ff0099cc")));
         _fvh.setUnFocusedColor(attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
-                                                                android.R.color.darker_gray));
+                                                                Color.parseColor("#8D8D8D")));
         _fvh.setInputTextSizeInSp(_getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
                                                                                                    (int) _inputTextView
                                                                                                              .getTextSize())));
