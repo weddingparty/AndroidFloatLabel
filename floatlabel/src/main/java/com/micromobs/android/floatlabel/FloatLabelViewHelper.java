@@ -1,11 +1,12 @@
 package com.micromobs.android.floatlabel;
 
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.annotation.TargetApi;
+import android.os.Build;
 import android.view.View;
-import android.view.animation.AnimationUtils;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import static android.view.View.VISIBLE;
 
 public class FloatLabelViewHelper {
 
@@ -59,17 +60,21 @@ public class FloatLabelViewHelper {
     }
 
     public void showOrHideFloatingLabel(EditText inputText, TextView floatHint) {
-        boolean currentlyShowing = floatHint.getVisibility() == VISIBLE;
 
-        if (!currentlyShowing && inputText.length() > 0) {
-            floatHint.setVisibility(VISIBLE);
-            floatHint.startAnimation(AnimationUtils.loadAnimation(floatHint.getContext(),
-                                                                  R.anim.weddingparty_floatlabel_slide_from_bottom));
+        boolean floatHintVisible = floatHint.getAlpha() != 0;
+
+        if (!floatHintVisible && inputText.length() > 0) {
+            PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat(View.Y, 0);
+            PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f, 1f);
+            ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350).start();
         }
-        if (currentlyShowing && inputText.length() < 1) {
-            floatHint.setVisibility(View.INVISIBLE);
-            floatHint.startAnimation(AnimationUtils.loadAnimation(floatHint.getContext(),
-                                                                  R.anim.weddingparty_floatlabel_slide_to_bottom));
+
+        if (floatHintVisible && inputText.length() < 1) {
+            PropertyValuesHolder pvhY = PropertyValuesHolder.ofFloat(View.Y,
+                                                                     (float) (0.2 *
+                                                                              floatHint.getHeight()));
+            PropertyValuesHolder pvhAlpha = PropertyValuesHolder.ofFloat(View.ALPHA, 0f);
+            ObjectAnimator.ofPropertyValuesHolder(floatHint, pvhY, pvhAlpha).setDuration(350).start();
         }
     }
 }

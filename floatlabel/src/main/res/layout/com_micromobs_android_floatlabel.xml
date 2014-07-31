@@ -6,12 +6,12 @@
 
     <TextView
         android:id="@+id/com.micromobs.android.floatlabel.float_hint"
+        android:alpha="0"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"/>
 
     <EditText
         android:id="@+id/com.micromobs.android.floatlabel.input_text"
-
         android:layout_height="wrap_content"
         android:layout_width="wrap_content"
         android:hint="_"/>

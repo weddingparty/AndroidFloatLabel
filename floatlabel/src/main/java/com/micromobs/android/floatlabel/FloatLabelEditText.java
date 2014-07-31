@@ -20,15 +20,15 @@ public class FloatLabelEditText
     private int _currentApiVersion = android.os.Build.VERSION.SDK_INT;
     private int _gravity;
 
-    private String _hintText;
-    private String _editText;
+    private String _floatHintString;
+    private String _inputTextString;
 
     private boolean _isPassword = false;
 
     private AttributeSet _attributes;
     private Context _context;
-    private EditText _inputText;
-    private TextView _floatHint;
+    private EditText _inputTextView;
+    private TextView _floatHintView;
     private FloatLabelViewHelper _fvh;
 
     // -----------------------------------------------------------------------
@@ -74,20 +74,19 @@ public class FloatLabelEditText
 
         // 1. -------------------------------------------------------------------------------------------
         // measureChild measures the view thus allowing us to get individual heights/widths from the children
-        measureChild(_inputText, widthMeasureSpec, heightMeasureSpec);
-        measureChild(_floatHint, widthMeasureSpec, heightMeasureSpec);
+        measureChild(_inputTextView, widthMeasureSpec, heightMeasureSpec);
+        measureChild(_floatHintView, widthMeasureSpec, heightMeasureSpec);
 
         // 2. -------------------------------------------------------------------------------------------
         final int totalWidth = MeasureSpec.getSize(widthMeasureSpec);
-        final int totalHeight = _inputText.getMeasuredHeight() +
-                                _floatHint.getMeasuredHeight() +
+        final int totalHeight = _inputTextView.getMeasuredHeight() +
+                                _floatHintView.getMeasuredHeight() +
                                 getPaddingTop() +
                                 getPaddingBottom();
 
         // 3. -------------------------------------------------------------------------------------------
         setMeasuredDimension(totalWidth, totalHeight);
     }
-
 
     /**
      * This method helps the app understand how to layout each child in the view
@@ -100,22 +99,22 @@ public class FloatLabelEditText
                          int rightCoordinate,
                          int bottomCoordinate) {
 
-        final int heightTakenByFloatHint = getPaddingTop() + _floatHint.getMeasuredHeight();
+        final int heightTakenByFloatHint = getPaddingTop() + _floatHintView.getMeasuredHeight();
 
         // layout the Input Text
-        _inputText.layout(getPaddingLeft(),
-                          heightTakenByFloatHint + FloatLabelViewHelper.SPACE_BETWEEN_HINT_AND_TEXT,
-                          _fvh.getRightCoordinateForInputText(getMeasuredWidth(),
-                                                              _inputText.getMeasuredWidth()),
-                          heightTakenByFloatHint +
-                          FloatLabelViewHelper.SPACE_BETWEEN_HINT_AND_TEXT +
-                          _inputText.getMeasuredHeight());
+        _inputTextView.layout(getPaddingLeft(),
+                              heightTakenByFloatHint + FloatLabelViewHelper.SPACE_BETWEEN_HINT_AND_TEXT,
+                              _fvh.getRightCoordinateForInputText(getMeasuredWidth(),
+                                                                  _inputTextView.getMeasuredWidth()),
+                              heightTakenByFloatHint +
+                              FloatLabelViewHelper.SPACE_BETWEEN_HINT_AND_TEXT +
+                              _inputTextView.getMeasuredHeight());
 
         // layout the Float Hint
-        _floatHint.layout(getPaddingLeft() + _inputText.getPaddingLeft(),
-                          getPaddingTop(),
-                          _floatHint.getMeasuredWidth(),
-                          heightTakenByFloatHint);
+        _floatHintView.layout(getPaddingLeft() + _inputTextView.getPaddingLeft(),
+                              getPaddingTop(),
+                              _floatHintView.getMeasuredWidth(),
+                              heightTakenByFloatHint);
 
 
     }
@@ -131,8 +130,8 @@ public class FloatLabelEditText
     // -----------------------------------------------------------------------
     // public API
 
-    public EditText getEditText() {
-        return _inputText;
+    public EditText getInputTextString() {
+        return _inputTextView;
     }
 
     public String getText() {
@@ -145,8 +144,8 @@ public class FloatLabelEditText
     }
 
     public void setHint(String hintText) {
-        _hintText = hintText;
-        _floatHint.setText(hintText);
+        _floatHintString = hintText;
+        _floatHintView.setText(hintText);
         setupEditTextView();
     }
 
@@ -161,8 +160,8 @@ public class FloatLabelEditText
 
         LayoutInflater.from(_context).inflate(R.layout.com_micromobs_android_floatlabel, this, true);
 
-        _floatHint = (TextView) findViewById(R.id.com_micromobs_android_floatlabel_float_hint);
-        _inputText = (EditText) findViewById(R.id.com_micromobs_android_floatlabel_input_text);
+        _floatHintView = (TextView) findViewById(R.id.com_micromobs_android_floatlabel_float_hint);
+        _inputTextView = (EditText) findViewById(R.id.com_micromobs_android_floatlabel_input_text);
         _fvh = new FloatLabelViewHelper();
 
         getAttributesFromXmlAndStoreLocally();
@@ -177,8 +176,8 @@ public class FloatLabelEditText
             return;
         }
 
-        _hintText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
-        _editText = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
+        _floatHintString = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_hint);
+        _inputTextString = attributesFromXmlLayout.getString(R.styleable.FloatLabelEditText_text);
         _gravity = attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_gravity, Gravity.LEFT);
         _isPassword = (attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_inputType, 0) == 1);
 
@@ -187,7 +186,7 @@ public class FloatLabelEditText
         _fvh.setUnFocusedColor(attributesFromXmlLayout.getColor(R.styleable.FloatLabelEditText_textColorHintUnFocused,
                                                                 android.R.color.darker_gray));
         _fvh.setInputTextSizeInSp(getScaledFontSize(attributesFromXmlLayout.getDimensionPixelSize(R.styleable.FloatLabelEditText_textSize,
-                                                                                                  (int) _inputText
+                                                                                                  (int) _inputTextView
                                                                                                             .getTextSize())));
         _fvh.setFitScreenWidth(attributesFromXmlLayout.getInt(R.styleable.FloatLabelEditText_fitScreenWidth,
                                                               0));
@@ -197,29 +196,31 @@ public class FloatLabelEditText
     private void setupEditTextView() {
 
         if (_isPassword) {
-            _inputText.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
-            _inputText.setTypeface(Typeface.DEFAULT);
+            _inputTextView.setInputType(InputType.TYPE_CLASS_TEXT |
+                                        InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            _inputTextView.setTypeface(Typeface.DEFAULT);
         }
 
-        _inputText.setHint(_hintText);
-        _inputText.setHintTextColor(_fvh.getUnFocusedColor());
-        _inputText.setText(_editText);
-        _inputText.setTextSize(_fvh.getInputTextSizeInSp());
-        _inputText.addTextChangedListener(getTextWatcher());
+        _inputTextView.setHint(_floatHintString);
+        _inputTextView.setHintTextColor(_fvh.getUnFocusedColor());
+        _inputTextView.setText(_inputTextString);
+        _inputTextView.setTextSize(_fvh.getInputTextSizeInSp());
+        _inputTextView.addTextChangedListener(getTextWatcher());
 
         if (_currentApiVersion >= android.os.Build.VERSION_CODES.HONEYCOMB) {
-            _inputText.setOnFocusChangeListener(FloatLabelAnimationHelper.getFocusChangeListener(_fvh,
-                                                                                                 _floatHint));
+            _inputTextView.setOnFocusChangeListener(FloatLabelAnimationHelper.getFocusChangeListener(_fvh,
+                                                                                                     _floatHintView));
         }
     }
 
     private void setupFloatingLabel() {
-        _floatHint.setGravity(_gravity);
-        _floatHint.setText(_hintText);
-        _floatHint.setTextColor(_fvh.getUnFocusedColor());
-        _floatHint.setTextSize(TypedValue.COMPLEX_UNIT_SP, _fvh.getFloatHintSizeInSp());
+        _floatHintView.setGravity(_gravity); // TODO: onLayout should take care of this
 
-        _fvh.showOrHideFloatingLabel(_inputText, _floatHint);
+        _floatHintView.setText(_floatHintString);
+        _floatHintView.setTextColor(_fvh.getUnFocusedColor());
+        _floatHintView.setTextSize(TypedValue.COMPLEX_UNIT_SP, _fvh.getFloatHintSizeInSp());
+
+        _fvh.showOrHideFloatingLabel(_inputTextView, _floatHintView);
     }
 
     private TextWatcher getTextWatcher() {
@@ -234,14 +235,14 @@ public class FloatLabelEditText
 
             @Override
             public void afterTextChanged(Editable s) {
-                _fvh.showOrHideFloatingLabel(_inputText, _floatHint);
+                _fvh.showOrHideFloatingLabel(_inputTextView, _floatHintView);
             }
         };
     }
 
 
     private Editable getEditTextString() {
-        return _inputText.getText();
+        return _inputTextView.getText();
     }
 
     private float getScaledFontSize(float fontSizeFromAttributes) {
