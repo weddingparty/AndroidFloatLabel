@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <declare-styleable name="FloatLabelEditText">
-        <attr name="fitScreenWidth" format="enum">
-            <enum name="full" value="1"/>
-            <enum name="half" value="2"/>
-        </attr>
+        <attr name="maxLength" format="integer" min="0" />
         <attr name="gravity" format="enum">
             <enum name="left" value="3"/>
             <enum name="right" value="5"/>
